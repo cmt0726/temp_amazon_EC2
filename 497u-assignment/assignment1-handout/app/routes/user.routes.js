@@ -10,13 +10,14 @@ const userControllers = require('../controllers/users.controllers');
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(express.json());
 router.use(express.static('public'));
-
+const passport = require('passport');
 
 router.post('/logout', userControllers.userLogout);
 
-router.post('/login', checkAuth.authenticateUserMiddleware, function(req, res) {
+router.post('/login',checkAuth.authenticateUserMiddleware, function(req, res) {
 	res.redirect('/post/');
 });
+
 
 router.get('/login', function(req, res) {
 	res.render('login');

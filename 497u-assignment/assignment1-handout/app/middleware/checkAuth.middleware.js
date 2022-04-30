@@ -1,6 +1,5 @@
-
 const passport = require('passport');
-
+const ddbGet = require('../dynamo/ddb_getitem.js');
 
 const isAuthenticatedMiddleware = (req, res, next) => {
 	console.log('middleware entered');
@@ -13,13 +12,10 @@ const isAuthenticatedMiddleware = (req, res, next) => {
 	}
 };
 
-const authenticateUserMiddleware = (req,res) => {
-  console.log("attempting login");
-	passport.authenticate('local', { failureRedirect: '/user/login' })(req,res, function() {
-    res.redirect('/post');
-	
-  });
-  console.log("login successful");
+const authenticateUserMiddleware = async (req,res) => {
+	 passport.authenticate('local', { failureRedirect: '/user/login', failureMessage: true })(req, res, function(){
+		res.redirect('/post');
+	});
 }
 
 module.exports = {

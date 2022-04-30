@@ -25,7 +25,7 @@ const addUser = async (username, email, password) => {
         Item: {
           username: `${username}`,
           email: `${email}`,
-          password: `${password}`
+          password: `${saltAndHash}`
         },
         ConditionExpression: "attribute_not_exists(username)",
       }
@@ -71,5 +71,5 @@ module.exports = {
   addUser,
   addBlogPost
 }
-//addBlogPost("dynamotester4", "blog test id2", "this blog is a test").then(res => console.log(res));
+addBlogPost("dynamotester4", "blog test id2", "this blog is a test").then(res => console.log(res));
 //addUser("dynamotester4", "dynamotester4@test.com", "thisshouldbehashed").then(res => console.log(res));

@@ -27,7 +27,7 @@ const userRegister = async (req, res, next) => {
 
     console.log(input_username);
     const addUserRes = await ddbPut.addUser(input_username, input_email, input_password);
-
+   
     passport.authenticate('local')(req, res, function () {
         res.redirect('/post');
     });
