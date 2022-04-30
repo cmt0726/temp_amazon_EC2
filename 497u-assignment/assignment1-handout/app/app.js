@@ -24,27 +24,17 @@ let RedisStore = require("connect-redis")(session)
 
 
 
-const Redis = require("redis")
+const ioRedis = require("ioredis")
 
-const redisClient = Redis.createClient({
-	url : "rediss://teigec:vigilantsuperwoman1!@redis-assign1.gkjgwl.ng.0001.usw2.cache.amazonaws.com:6379",
-	socket: {
-		tls: true,
-		servername : "redis-assign1.gkjgwl.ng.0001.usw2.cache.amazonaws.com"
-	}
-	// host : "redis-assign1.gkjgwl.ng.0001.usw2.cache.amazonaws.com:6379",
-	// port : config.get('redis_port')
-});
-
-
-
-(async () => {
-	redisClient.connect();
-})()
-
-redisClient.on('error', (error) => {
-	console.log("No Redis Connection: " + error);
+const ioredis = new ioRedis({
+	port : 6379,
+	host : "redis-assign1.gkjgwl.ng.0001.usw2.cache.amazonaws.com"
 })
+
+
+
+
+
 
 const User = require("./models/user");
 
@@ -79,7 +69,7 @@ const blog_db_url =
 //setup this app to use Redis for it's session storage
 app.use(
 	session({
-		store : new RedisStore({client : redisClient}),
+		store : new RedisStore({client : ioredis}),
 		saveUninitialized : false,
 		secret : config.get("secret"),
 		cookie: {
