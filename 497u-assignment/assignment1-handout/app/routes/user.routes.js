@@ -14,10 +14,9 @@ router.use(express.static('public'));
 
 router.post('/logout', userControllers.userLogout);
 
-router.post('/login', passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login",
-}));
+router.post('/login', checkAuth.authenticateUserMiddleware, function(req, res) {
+	res.redirect('/post/');
+});
 
 router.get('/login', function(req, res) {
 	res.render('login');
