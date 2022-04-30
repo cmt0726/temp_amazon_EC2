@@ -27,9 +27,16 @@ let RedisStore = require("connect-redis")(session)
 const Redis = require("redis")
 
 const redisClient = Redis.createClient({
-	host : config.get('redis_host'),
-	port : config.get('redis_port')
+	url : "rediss://teigec:vigilantsuperwoman1!@redis-assign1.gkjgwl.ng.0001.usw2.cache.amazonaws.com:6379",
+	socket: {
+		tls: true,
+		servername : "redis-assign1.gkjgwl.ng.0001.usw2.cache.amazonaws.com"
+	}
+	// host : "redis-assign1.gkjgwl.ng.0001.usw2.cache.amazonaws.com:6379",
+	// port : config.get('redis_port')
 });
+
+
 
 (async () => {
 	redisClient.connect();
