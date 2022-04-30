@@ -32,10 +32,6 @@ const ioredis = new ioRedis({
 })
 
 
-
-
-
-
 const User = require("./models/user");
 
 const userRouter = require('./routes/user.routes');
@@ -71,7 +67,7 @@ app.use(
 	session({
 		store : new RedisStore({client : ioredis}),
 		saveUninitialized : false,
-		secret : config.get("secret"),
+		secret : ConnorRolandCole,
 		cookie: {
 			secure : false,
 			httpOnly : false,
@@ -113,7 +109,7 @@ passport.deserializeUser((login, done) =>  {
 	//});
 });
 
-passport.use(new LocalStrategy((user, pass, done) => {
+passport.use('local', new LocalStrategy((user, pass, done) => {
 	/*AWSdb.getItem('user', user, null, {}, (err, item) => {
 		const message = 'Login Failed';
 		if (err){
@@ -126,7 +122,8 @@ passport.use(new LocalStrategy((user, pass, done) => {
 	});*/
 
 	const dbUser = ddbGet.getUser(user);
-	bcrypt.compare(password, dbUser.password, function(err, res) {
+	bcrypt.compare(pass, dbUser.password, function(err, res) {
+		//debugger;
 		if (err) return done(err);
 		if (res === false){
 			return done(null, false);
