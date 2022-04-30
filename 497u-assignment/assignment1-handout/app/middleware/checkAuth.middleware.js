@@ -15,9 +15,7 @@ const isAuthenticatedMiddleware = (req, res, next) => {
 
 const authenticateUserMiddleware = (req,res) => {
   console.log("attempting login");
-	passport.authenticate('local', { failureRedirect: '/user/login' })(req,res, function() {
-    res.redirect('/post');
-  });
+	passport.authenticate('local', { failureRedirect: '/user/login', successRedirect : '/post' })
   console.log("login successful");
 }
 
