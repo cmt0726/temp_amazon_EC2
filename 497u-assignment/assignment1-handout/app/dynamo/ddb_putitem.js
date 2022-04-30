@@ -1,3 +1,4 @@
+require('dotenv').config();
 // Load the AWS SDK for Node.js
 var AWS = require('aws-sdk');
 const {body, validationResult} = require('express-validator');
@@ -5,7 +6,13 @@ const {body, validationResult} = require('express-validator');
 AWS.config.update({region: 'us-west-2'});
 const bcrypt = require('bcrypt');
 
-const docClient = new AWS.DynamoDB.DocumentClient();
+const docClient = new AWS.DynamoDB.DocumentClient({
+	accessKeyId: process.env.DYNAMODB_ACCESSKEYID,
+  	secretAccessKey: process.env.DYNAMODB_SECRETACCESSKEY,
+  	endpoint: process.env.DYNAMODB_ENDPOINT,
+	region: 'us-west-2'
+});
+
 
 const addUser = async (username, email, password) => {
   saltRounds = 10;
