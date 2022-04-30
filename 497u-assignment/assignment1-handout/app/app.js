@@ -67,7 +67,7 @@ app.use(
 	session({
 		store : new RedisStore({client : ioredis}),
 		saveUninitialized : false,
-		secret : ConnorRolandCole,
+		secret : 'ConnorRolandCole',
 		cookie: {
 			secure : false,
 			httpOnly : false,
